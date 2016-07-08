@@ -1,4 +1,4 @@
-(defproject matthiasn/systems-toolbox-redis "0.6.1-SNAPSHOT"
+(defproject matthiasn/systems-toolbox-redis "0.6.1-alpha1"
   :description "Redis communication components for systems-toolbox"
   :url "https://github.com/matthiasn/systems-toolbox-redis"
   :license {:name "Eclipse Public License"
