@@ -1,6 +1,5 @@
 (ns matthiasn.systems-toolbox-redis.receiver
   (:require [matthiasn.systems-toolbox-redis.spec]
-            [clojure.core.match :refer [match]]
             [taoensso.carmine :as car]
             [clojure.tools.logging :as log]))
 
@@ -21,7 +20,8 @@
     (car/subscribe topic)))
 
 (defn iop-state-fn
-  "Returns function for making state of the interop-component while using provided configuration."
+  "Returns function for making state of the interop-component.
+   Takes :cmp-id and configuration."
   [conf cmp-id]
   (fn [put-fn]
     (let [conn {:pool {}
