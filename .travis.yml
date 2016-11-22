@@ -1,0 +1,7 @@
+language: clojure
+services:
+  - redis-server
+lein: lein2
+script: lein2 test
+jdk:
+  - oraclejdk8
