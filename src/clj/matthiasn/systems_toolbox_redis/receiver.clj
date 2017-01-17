@@ -8,11 +8,12 @@
   [put-fn]
   (fn [[msg-type _topic payload]]
     (when (= msg-type "message")
-      (let [[cmd-type {:keys [msg msg-meta]}] payload]
-        (put-fn (with-meta [cmd-type msg] msg-meta))))))
+      (let [[msg-type {:keys [msg msg-meta]}] payload]
+        (log/debug "Receiving message" payload)
+        (put-fn (with-meta [msg-type msg] msg-meta))))))
 
 (defn subscribe-topic
-  "subscribe to topic, put items on specified channel"
+  "Subscribe to topic, put items on specified channel"
   [put-fn conn topic]
   (car/with-new-pubsub-listener
     (:spec conn)
@@ -27,7 +28,7 @@
     (let [conn {:pool {}
                 :spec (select-keys conf [:host :port])}
           listener (subscribe-topic put-fn conn (:topic conf))]
-      (log/info cmp-id "connected to Redis:" (:host conf) (:port conf))
+      (log/info cmp-id "Connecting to Redis:" (:host conf) (:port conf))
       {:state (atom {:conf     conf
                      :conn     conn
                      :listener listener})})))

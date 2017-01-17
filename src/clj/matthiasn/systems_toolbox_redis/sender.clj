@@ -1,12 +1,8 @@
 (ns matthiasn.systems-toolbox-redis.sender
   (:require [matthiasn.systems-toolbox-redis.spec]
             [taoensso.carmine :as car]
-            [clojure.tools.logging :as l]))
-
-(defn publish
-  "Publish tweet with matches on Redis Pub/Sub for specified topic."
-  [conn topic msg]
-  (car/wcar conn (car/publish topic msg)))
+            [clojure.tools.logging :as l]
+            [clojure.tools.logging :as log]))
 
 (defn iop-state-fn
   "Returns function for making state of the interop-component while using
@@ -15,16 +11,19 @@
   (fn [_put-fn]
     (let [conn {:pool {}
                 :spec (select-keys conf [:host :port])}]
-      (l/info cmp-id "connected to Redis:" (:host conf) (:port conf))
+      (l/debug cmp-id "Connecting to Redis:" (:host conf) (:port conf))
       {:state (atom {:conf conf
                      :conn conn})})))
 
 (defn publish-msg
   "Publish message on Redis topic."
   [{:keys [current-state msg-type msg-payload msg-meta]}]
-  (publish (:conn current-state)
-           (:topic (:conf current-state))
-           [msg-type {:msg msg-payload :msg-meta msg-meta}]))
+  (let [conn (:conn current-state)
+        topic (:topic (:conf current-state))
+        msg [msg-type {:msg msg-payload :msg-meta msg-meta}]]
+    (log/debug "Publishing message on Redis topic" topic msg)
+    (car/wcar conn (car/publish topic msg))
+    {}))
 
 (defn cmp-map
   "Create component for communicating via Redis."
