@@ -1,5 +1,5 @@
 (ns matthiasn.systems-toolbox-redis.spec
-  (:require [clojure.spec :as s]))
+  (:require [clojure.spec.alpha :as s]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Component State Spec

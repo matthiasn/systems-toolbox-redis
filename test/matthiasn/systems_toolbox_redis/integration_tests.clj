@@ -4,7 +4,7 @@
             [matthiasn.systems-toolbox.switchboard :as sb]
             [matthiasn.systems-toolbox-redis.receiver :as rr]
             [matthiasn.systems-toolbox-redis.sender :as rs]
-            [clojure.spec :as s]))
+            [clojure.spec.alpha :as s]))
 
 (s/def :test/msg (s/map-of keyword? number?))
 

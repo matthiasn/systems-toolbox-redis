@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file. This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/).
 
+## [0.6.4] - 2016-05-30
+### Changed
+- latest dependencies
+- Clojure spec split
+
 ## [0.6.3] - 2016-01-17
 ### Changed
 - latest dependencies
